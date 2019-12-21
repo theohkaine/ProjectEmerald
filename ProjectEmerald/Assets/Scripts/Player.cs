@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     Camera viewCamera;
     PlayerController controller;
+    
 
     void Start()
     {
@@ -26,12 +27,16 @@ public class Player : MonoBehaviour
 
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        
         float rayDistance;
 
         if (groundPlane.Raycast(ray, out rayDistance))
         {
             Vector3 point = ray.GetPoint(rayDistance);
             controller.LookAt(point);
+
+            Debug.DrawLine(ray.origin, point, Color.red);   //FOR DEBUGGING PURPOSES
         }
+
     }
 }
