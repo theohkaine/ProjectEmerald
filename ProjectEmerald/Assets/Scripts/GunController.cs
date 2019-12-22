@@ -6,16 +6,23 @@ public class GunController : MonoBehaviour
 {
 
     public Transform weaponHold;
-    public Gun startingGun;
+    public Gun flashlight;
     public Gun pistol;
-    Gun equippedGun;
+    public Gun equippedGun;
+
+    MeleeWeaponController meleeController;
 
     void Start()
     {
+
+        meleeController = GetComponent<MeleeWeaponController>();
+        /*
+        -MELEE IS NOW STARTING WEAPON
         if (startingGun != null)
         {
             EquipGun(startingGun);
         }
+        */
     }
 
     public void EquipGun(Gun gunToEquip)
@@ -23,6 +30,10 @@ public class GunController : MonoBehaviour
         if (equippedGun != null)
         {
             Destroy(equippedGun.gameObject);
+            if (meleeController.equippedMelee != null)
+            {
+                Destroy(meleeController.equippedMelee.gameObject);
+            }
         }
         equippedGun = Instantiate(gunToEquip, weaponHold.position, weaponHold.rotation) as Gun;
         equippedGun.transform.parent = weaponHold;

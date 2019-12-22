@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(GunController))]
-[RequireComponent(typeof(ControlPanelController))]
+[RequireComponent(typeof(MeleeWeaponController))]
 public class Player : MonoBehaviour
 {
 
@@ -13,13 +13,14 @@ public class Player : MonoBehaviour
     Camera viewCamera;
     PlayerController controller;
     GunController gunController;
-    ControlPanelController controlPanel;
+    MeleeWeaponController meleeController;
 
     void Start()
     {
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
-        controlPanel = GetComponent<ControlPanelController>();
+        meleeController = GetComponent<MeleeWeaponController>();
+
         viewCamera = Camera.main;
     }
 
@@ -29,8 +30,10 @@ public class Player : MonoBehaviour
 
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Vertical"), 0, -(Input.GetAxisRaw("Horizontal")));
         Vector3 moveVelocity = moveInput.normalized * moveSpeed;
-        controller.Move(moveVelocity);
 
+        controller.MovementManager(moveVelocity);
+        
+        
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         
@@ -50,12 +53,30 @@ public class Player : MonoBehaviour
             gunController.Shoot();
         }
 
+        /*
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            controller.MovementManager(moveVelocity);
+            controller.currentState = PlayerController.State.sneaking;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            controller.MovementManager(moveVelocity);
+            controller.currentState = PlayerController.State.running;
+        }
+        */
+
         //Change Gun Input
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            gunController.EquipGun(gunController.startingGun);
+            meleeController.EquipMelee(meleeController.startingMelee);
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            gunController.EquipGun(gunController.flashlight);
+        }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             gunController.EquipGun(gunController.pistol);
@@ -64,7 +85,7 @@ public class Player : MonoBehaviour
         //Interact with control panels
         if (Input.GetKeyDown(KeyCode.E))
         {
-            controlPanel.activated = true;
+           
         }
 
     }
