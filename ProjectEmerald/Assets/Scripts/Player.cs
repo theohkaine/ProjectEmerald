@@ -23,19 +23,11 @@ public class Player : MonoBehaviour
     
     void Update()
     {
-<<<<<<< HEAD
+
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Vertical"), 0, -(Input.GetAxisRaw("Horizontal")));
         Vector3 moveVelocity = moveInput.normalized * moveSpeed;
         controller.Move(moveVelocity);
- 
-=======
-        //Movement Input
-        Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        Vector3 moveVelocity = moveInput.normalized * moveSpeed;
-        controller.Move(moveVelocity);
 
-        //Look Input
->>>>>>> 2910e40726d8e84b5424168c1106f47b245fda6e
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         
