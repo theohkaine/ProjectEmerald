@@ -48,5 +48,16 @@ public class Player : MonoBehaviour
             gunController.Shoot();
         }
 
+        //Change Gun Input
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            gunController.EquipGun(gunController.startingGun);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            gunController.EquipGun(gunController.pistol);
+        }
+
     }
 }
