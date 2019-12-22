@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(GunController))]
+[RequireComponent(typeof(ControlPanelController))]
 public class Player : MonoBehaviour
 {
 
@@ -12,11 +13,13 @@ public class Player : MonoBehaviour
     Camera viewCamera;
     PlayerController controller;
     GunController gunController;
+    ControlPanelController controlPanel;
 
     void Start()
     {
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
+        controlPanel = GetComponent<ControlPanelController>();
         viewCamera = Camera.main;
     }
 
@@ -56,6 +59,12 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             gunController.EquipGun(gunController.pistol);
+        }
+
+        //Interact with control panels
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            controlPanel.activated = true;
         }
 
     }

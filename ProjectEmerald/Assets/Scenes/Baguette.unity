@@ -658,12 +658,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 117bfff8ea5cb7545b5a48b71d0e81da, type: 3}
---- !u!4 &233893638 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 95299936478153985, guid: 117bfff8ea5cb7545b5a48b71d0e81da,
-    type: 3}
-  m_PrefabInstance: {fileID: 233893637}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &358798907
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,7 +670,6 @@ GameObject:
   - component: {fileID: 358798912}
   - component: {fileID: 358798911}
   - component: {fileID: 358798910}
-  - component: {fileID: 358798909}
   - component: {fileID: 358798908}
   m_Layer: 0
   m_Name: Player
@@ -699,18 +692,6 @@ CapsuleCollider:
   m_Height: 1.85
   m_Direction: 1
   m_Center: {x: 0, y: -0.1, z: 0}
---- !u!114 &358798909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 358798907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f36652a28f786d346a507967360418c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &358798910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,7 +746,7 @@ Transform:
   m_Children:
   - {fileID: 155556366}
   - {fileID: 1988859974}
-  - {fileID: 233893638}
+  - {fileID: 1919664132}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -2254,6 +2235,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 500224197120084742, guid: bfdf3d1e1fa583a4d923095f5b817a75,
     type: 3}
   m_PrefabInstance: {fileID: 1871465810}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1919664132 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7604008158466556661, guid: 117bfff8ea5cb7545b5a48b71d0e81da,
+    type: 3}
+  m_PrefabInstance: {fileID: 233893637}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1988859973
 PrefabInstance:
