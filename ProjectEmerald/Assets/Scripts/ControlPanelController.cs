@@ -5,24 +5,28 @@ using UnityEngine;
 public class ControlPanelController : MonoBehaviour
 {
     Transform target;
-    public ControlPanel panel;
-    public bool activated = false;
+    Door door;
+    public Door targetDoor;
 
-    public GameObject door;
+    float sqrDistanceToTarget;
 
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-       
+       target = GameObject.FindGameObjectWithTag("Player").transform;
+        door = GetComponent<Door>();
     }
 
-    void Update()
+    public void FixedUpdate()
     {
-        float sqrDistanceToTarget = (target.position - transform.position).sqrMagnitude;
+        sqrDistanceToTarget = (target.position - transform.position).sqrMagnitude;
+    }
 
+    public void Activate()
+    {
         if (sqrDistanceToTarget < 2)
         {
-            panel.Activate(door);
+            door.Activate(targetDoor);
         }
+        print("Reached 2");
     }
 }

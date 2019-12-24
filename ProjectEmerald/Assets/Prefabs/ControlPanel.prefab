@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1140337844472700263}
-  - component: {fileID: -2567343880559061061}
+  - component: {fileID: -3038366282775779503}
   m_Layer: 0
   m_Name: ControlPanel
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2567343880559061061
+--- !u!114 &-3038366282775779503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,9 +42,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1140337844472700262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d256ffadb8ed5a449fe32f1946504f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c9e722da2e07754c9c3a6442deeb540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetDoor: {fileID: -6000703924524038483, guid: 1889dfd031a4c47459a9930e7757bc48,
+    type: 3}
 --- !u!1 &1140337844915295650
 GameObject:
   m_ObjectHideFlags: 0

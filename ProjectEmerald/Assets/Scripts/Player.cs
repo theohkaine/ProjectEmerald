@@ -14,12 +14,14 @@ public class Player : MonoBehaviour
     PlayerController controller;
     GunController gunController;
     MeleeWeaponController meleeController;
+    ControlPanelController controlPanel;
 
     void Start()
     {
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
         meleeController = GetComponent<MeleeWeaponController>();
+        controlPanel = GetComponent<ControlPanelController>();
 
         viewCamera = Camera.main;
     }
@@ -85,7 +87,8 @@ public class Player : MonoBehaviour
         //Interact with control panels
         if (Input.GetKeyDown(KeyCode.E))
         {
-           
+            controlPanel.Activate();
+            print("Reached 1");
         }
 
     }
