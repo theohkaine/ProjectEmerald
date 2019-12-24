@@ -5,43 +5,70 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public enum State { idle, walking, sneaking, running };
+    public enum State { idle, walking, sneaking, running, gunIdle, gunWalking };
     public State currentState;
 
     Vector3 velocity;
     Rigidbody rigidbody;
 
+    GunController gunController;
+
     static Animator anim;
-    
+
+    bool isEquippedAnim;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        gunController = GetComponent<GunController>();
+
+       
     }
 
     public void MovementManager(Vector3 _velocity)
     {
         velocity = _velocity;
-        if (velocity.magnitude == 0)        //IDLE
+
+        if (isEquippedAnim == false)
         {
-            Idle();
-        }
-        else if (currentState == State.sneaking)
-        {
-            Sneaking(velocity);
-        }
-        else if (currentState == State.running)
-        {
-            Running(velocity);
+            if (velocity.magnitude == 0)        //IDLE
+            {
+                Idle();
+            }
+            else if (currentState == State.sneaking)    //Class Player OnKeyDown - LEFT_CTRL
+            {
+                Sneaking(velocity);
+            }
+            else if (currentState == State.running)     //Class Player OnKeyDown - LEFT_SHIFT
+            {
+                Running(velocity);
+            }
+            else
+            {                                   //WALK
+                Move(velocity);
+            }
         }
         else
-        {                                   //WALK
-            Move(velocity);
+        {
+            if (velocity.magnitude == 0)        //IDLE
+            {
+                gunIdle();
+            }
+            else
+            {
+                gunWalking();
+            }
         }
+       
         
     }
 
+
+    //ANIMATIONS FUNCTIONS
+    //================================
+    //  NOT EQUIPPED
+    //================================
     public void Idle()
     {
         currentState = State.idle;
@@ -78,6 +105,33 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isWalking", false);
         anim.SetBool("isIdle", false);
     }
+    //================================
+
+
+    //ANIMATIONS FUNCTIONS
+    //================================
+    //      EQUIPPED
+    //================================
+
+    public void gunIdle()
+    {
+        currentState = State.gunIdle;
+        anim.SetBool("isEquipped", true);
+        anim.SetBool("isWalking", false);
+    }
+
+    public void gunWalking()
+    {
+        currentState = State.gunWalking;
+        anim.SetBool("isEquipped", true);
+        anim.SetBool("isWalking", true);
+    }
+
+
+    //================================
+
+
+
 
     public void LookAt(Vector3 lookPoint)
     {
@@ -88,5 +142,14 @@ public class PlayerController : MonoBehaviour
     public void FixedUpdate()
     {
         rigidbody.MovePosition(rigidbody.position + velocity * Time.fixedDeltaTime);
+
+        if (gunController.equippedGun != null)
+        {
+            isEquippedAnim = true;
+        }
+        else
+        {
+            isEquippedAnim = false;
+        }
     }
 }

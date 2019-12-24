@@ -8,21 +8,24 @@ public class GunController : MonoBehaviour
     public Transform weaponHold;
     public Gun flashlight;
     public Gun pistol;
+    public Gun shotgun;
+    public Gun startingGun;
     public Gun equippedGun;
+    
 
-    MeleeWeaponController meleeController;
+    //MeleeWeaponController meleeController;
 
     void Start()
     {
 
-        meleeController = GetComponent<MeleeWeaponController>();
-        /*
-        -MELEE IS NOW STARTING WEAPON
+        //meleeController = GetComponent<MeleeWeaponController>();
+        
+        //MELEE IS NOW STARTING WEAPON
         if (startingGun != null)
         {
             EquipGun(startingGun);
         }
-        */
+       
     }
 
     public void EquipGun(Gun gunToEquip)
@@ -30,10 +33,11 @@ public class GunController : MonoBehaviour
         if (equippedGun != null)
         {
             Destroy(equippedGun.gameObject);
-            if (meleeController.equippedMelee != null)
+            /*if (meleeController.equippedMelee != null)
             {
                 Destroy(meleeController.equippedMelee.gameObject);
             }
+            */
         }
         equippedGun = Instantiate(gunToEquip, weaponHold.position, weaponHold.rotation) as Gun;
         equippedGun.transform.parent = weaponHold;
@@ -43,7 +47,15 @@ public class GunController : MonoBehaviour
     {
         if (equippedGun != null)
         {
-            equippedGun.Shoot();
+            //if (equippedGun == pistol)
+           // {
+                equippedGun.Shoot();
+            //}
+            //if (equippedGun == shotgun)
+            //{
+               // equippedGun.ShootShotGun();
+            //}
+            
         }
     }
 }

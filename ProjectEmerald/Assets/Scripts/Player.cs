@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(GunController))]
-[RequireComponent(typeof(MeleeWeaponController))]
+//[RequireComponent(typeof(MeleeWeaponController))]
 public class Player : MonoBehaviour
 {
 
@@ -13,14 +13,14 @@ public class Player : MonoBehaviour
     Camera viewCamera;
     PlayerController controller;
     GunController gunController;
-    MeleeWeaponController meleeController;
+    //MeleeWeaponController meleeController;
     ControlPanelController controlPanel;
 
     void Start()
     {
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
-        meleeController = GetComponent<MeleeWeaponController>();
+        //meleeController = GetComponent<MeleeWeaponController>();
         controlPanel = GetComponent<ControlPanelController>();
 
         viewCamera = Camera.main;
@@ -72,14 +72,14 @@ public class Player : MonoBehaviour
         //Change Gun Input
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            meleeController.EquipMelee(meleeController.startingMelee);
+            //meleeController.EquipMelee(meleeController.startingMelee);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             gunController.EquipGun(gunController.flashlight);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             gunController.EquipGun(gunController.pistol);
         }

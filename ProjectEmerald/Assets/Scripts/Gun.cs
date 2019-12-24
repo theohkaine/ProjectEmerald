@@ -20,4 +20,18 @@ public class Gun : MonoBehaviour
         }
         
     }
+    public void ShootShotGun()
+    {
+        if (Time.time > nextShotTime)
+        {
+            nextShotTime = Time.time + msBetweenShots / 1000;
+            Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
+            Projectile newProjectile2 = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
+            Projectile newProjectile3 = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
+            newProjectile.SetSpeed(muzzleVelocity);
+            newProjectile2.SetSpeed(muzzleVelocity);
+            newProjectile3.SetSpeed(muzzleVelocity);
+        }
+
+    }
 }
