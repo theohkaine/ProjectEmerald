@@ -47,15 +47,19 @@ public class GunController : MonoBehaviour
     {
         if (equippedGun != null)
         {
-            //if (equippedGun == pistol)
-           // {
+           if (equippedGun.name == "CustomPistol(Clone)")
+           {
                 equippedGun.Shoot();
-            //}
-            //if (equippedGun == shotgun)
-            //{
-               // equippedGun.ShootShotGun();
-            //}
-            
+           }
+           if (equippedGun.name == "Shotgun(Clone)")
+           {
+               equippedGun.ShootShotGun();
+           }
+            if (equippedGun.name == "FlashLight(Clone)")
+            {
+                equippedGun.Shoot();
+            }
+
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public enum State { idle, walking, sneaking, running, gunIdle, gunWalking };
+    public enum State { idle, walking, sneaking, running, gunIdle, gunWalking, rifleIdle, rifleWalking };
     public State currentState;
 
     Vector3 velocity;
@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     static Animator anim;
 
     bool isEquippedAnim;
+    
 
     void Start()
     {
@@ -51,14 +52,29 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (velocity.magnitude == 0)        //IDLE
+            if (gunController.equippedGun.name == "CustomPistol(Clone)" || gunController.equippedGun.name == "FlashLight(Clone)")           //EQUIPPED
             {
-                gunIdle();
+                if (velocity.magnitude == 0)        //IDLE                          PISTOL & FLASHLIGHT, TYPE: 1 HANDED
+                {
+                    gunIdle();
+                }
+                else
+                {
+                    gunWalking();
+                }
             }
-            else
+            if (gunController.equippedGun.name == "Shotgun(Clone)")                 //SHOTGUN , TYPE: RIFLE
             {
-                gunWalking();
+                if (velocity.magnitude == 0)        //IDLE
+                {
+                    rifleIdle();
+                }
+                else
+                {
+                    rifleWalking();
+                }
             }
+            
         }
        
         
@@ -118,6 +134,7 @@ public class PlayerController : MonoBehaviour
         currentState = State.gunIdle;
         anim.SetBool("isEquipped", true);
         anim.SetBool("isWalking", false);
+        anim.SetBool("isEquippedWithRifle", false);
     }
 
     public void gunWalking()
@@ -125,6 +142,23 @@ public class PlayerController : MonoBehaviour
         currentState = State.gunWalking;
         anim.SetBool("isEquipped", true);
         anim.SetBool("isWalking", true);
+        anim.SetBool("isEquippedWithRifle", false);
+    }
+
+    public void rifleIdle()
+    {
+        currentState = State.rifleIdle;
+        anim.SetBool("isEquippedWithRifle", true);
+        anim.SetBool("isWalking", false);
+        anim.SetBool("isEquipped", false);
+    }
+
+    public void rifleWalking()
+    {
+        currentState = State.rifleWalking;
+        anim.SetBool("isEquippedWithRifle", true);
+        anim.SetBool("isWalking", true);
+        anim.SetBool("isEquipped", false);
     }
 
 

@@ -74,7 +74,6 @@ public class Player : MonoBehaviour
         {
             //meleeController.EquipMelee(meleeController.startingMelee);
         }
-
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             gunController.EquipGun(gunController.flashlight);
@@ -82,6 +81,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             gunController.EquipGun(gunController.pistol);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            gunController.EquipGun(gunController.shotgun);
         }
 
         //Interact with control panels

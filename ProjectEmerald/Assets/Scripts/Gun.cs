@@ -9,6 +9,11 @@ public class Gun : MonoBehaviour
     public float msBetweenShots = 100;
     public float muzzleVelocity = 35;
 
+    public Transform shotgunSecondMuzzle;
+    public Transform shotgunThirdMuzzle;
+
+
+
     float nextShotTime;
     public void Shoot()
     {
@@ -22,12 +27,14 @@ public class Gun : MonoBehaviour
     }
     public void ShootShotGun()
     {
+        
         if (Time.time > nextShotTime)
         {
+
             nextShotTime = Time.time + msBetweenShots / 1000;
             Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
-            Projectile newProjectile2 = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
-            Projectile newProjectile3 = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
+            Projectile newProjectile2 = Instantiate(projectile, shotgunSecondMuzzle.position, shotgunSecondMuzzle.rotation) as Projectile;
+            Projectile newProjectile3 = Instantiate(projectile, shotgunThirdMuzzle.position, shotgunThirdMuzzle.rotation) as Projectile;
             newProjectile.SetSpeed(muzzleVelocity);
             newProjectile2.SetSpeed(muzzleVelocity);
             newProjectile3.SetSpeed(muzzleVelocity);
