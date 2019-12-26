@@ -9,12 +9,14 @@ public class Player : MonoBehaviour
 {
 
     public float moveSpeed = 5;
+    public int health = 5;
 
     Camera viewCamera;
     PlayerController controller;
     GunController gunController;
     //MeleeWeaponController meleeController;
     ControlPanelController controlPanel;
+    Display display;
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour
         gunController = GetComponent<GunController>();
         //meleeController = GetComponent<MeleeWeaponController>();
         controlPanel = GetComponent<ControlPanelController>();
+        display = GetComponent<Display>();
 
         viewCamera = Camera.main;
     }
@@ -92,6 +95,12 @@ public class Player : MonoBehaviour
         {
             controlPanel.Activate();
             print("Reached 1");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            health--;
+            display.SetHealth(health.ToString());
         }
 
     }
