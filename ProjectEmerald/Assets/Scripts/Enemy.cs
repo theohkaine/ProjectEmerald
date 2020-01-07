@@ -7,23 +7,30 @@ using UnityEngine.AI;
 public class Enemy : LivingEntity
 {
 
-    public enum State { idle, Chasing, Attacking };
+    public enum State { idle, Chasing, Attacking, gunIdle, gunWalking, rifleIdle, rifleWalking };
     State currentState;
 
     NavMeshAgent pathFinder;
     Transform target;
     LivingEntity targetEntity;
 
+    GunController gunController;
+    
+    //ANIMATIONS
+    static Animator anim;
+    bool isEquippedAnim;
+
     Material skinMaterial;
 
     Color originalColor;
 
-    float attackDistanceThreshold = 0.5f;
-    float timeBetweenAttacks = 1;
+    float attackDistanceThreshold = 0.8f;
+    float timeBetweenAttacks = 0.8f;
 
     float damage = 1;
 
     float nextAttackTime;
+
     float myCollisionRadius;
     float targetCollisionRadius;
 
@@ -33,12 +40,16 @@ public class Enemy : LivingEntity
         base.Start();
         pathFinder = GetComponent<NavMeshAgent>();
 
+        gunController = GetComponent<GunController>();
+        anim = GetComponent<Animator>();
+
         skinMaterial = GetComponent<Renderer>().material;
         originalColor = skinMaterial.color;
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
-            currentState = State.Chasing;
+            currentState = State.gunWalking;
+            gunWalkingAnim();
             hasTarget = true;
 
             target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -56,7 +67,9 @@ public class Enemy : LivingEntity
     void OnTargetDeath()
     {
         hasTarget = false;
-        currentState = State.idle;
+        currentState = State.gunIdle;
+        gunIdleAnim();
+
     }
 
     void Update()
@@ -64,18 +77,45 @@ public class Enemy : LivingEntity
 
         if (hasTarget)
         {
-            if (Time.time > nextAttackTime)
-            {
-                float sqrDistanceToTarget = (target.position - transform.position).sqrMagnitude;
+            float sqrDistanceToTarget = (target.position - transform.position).sqrMagnitude;
 
-                if (sqrDistanceToTarget < Mathf.Pow(attackDistanceThreshold + myCollisionRadius + targetCollisionRadius, 2))
+            if (sqrDistanceToTarget < 22)   
+            {
+                if (Time.time > nextAttackTime)
                 {
                     nextAttackTime = Time.time + timeBetweenAttacks;
-                    StartCoroutine(Attack());
+
+                    //Equip Weapon
+                    gunController.EquipGun(gunController.pistol);
+                    StartCoroutine(Shooting());
+                    currentState = State.gunIdle;
+                    gunIdleAnim();
                 }
+            }
+            else
+            {
+                //Unequip Weapon
+                gunController.EquipGun(gunController.flashlight);
+                StartCoroutine(UpdatePath());
+                currentState = State.gunWalking;
+                gunWalkingAnim();
             }
         }
 
+    }
+
+    IEnumerator Shooting()
+    {
+        pathFinder.enabled = false;
+
+        while (currentState == State.gunIdle)
+        {
+            gunController.Shoot();
+            
+            yield return null;
+        }
+
+        pathFinder.enabled = true;
     }
 
     IEnumerator Attack()
@@ -110,21 +150,21 @@ public class Enemy : LivingEntity
             yield return null;
         }
         skinMaterial.color = originalColor;
-        currentState = State.Chasing;
+        currentState = State.gunWalking;
         pathFinder.enabled = true;
 
     }
 
     IEnumerator UpdatePath()
     {
-        float refreshRate = 0.25f;
+        float refreshRate = 0.55f;
 
         while (hasTarget)
         {
-            if (currentState == State.Chasing)
+            if (currentState == State.gunWalking)
             {
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
-                Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius + attackDistanceThreshold / 2);
+                Vector3 targetPosition = target.position - dirToTarget * (myCollisionRadius + targetCollisionRadius + attackDistanceThreshold / 2); //CHANGE : Enemy needs to stop moving when shooting.
                 if (!dead)
                 {
                     pathFinder.SetDestination(targetPosition);
@@ -134,5 +174,36 @@ public class Enemy : LivingEntity
             yield return new WaitForSeconds(refreshRate);
 
         }
+    }
+
+    //ANIMATIONS
+    //======================================================================
+    //
+    void gunIdleAnim()
+    {
+        anim.SetBool("isEquipped", true);
+        anim.SetBool("isWalking", false);
+        anim.SetBool("isEquippedWithRifle", false);
+    }
+
+    void gunWalkingAnim()
+    {
+        anim.SetBool("isEquipped", true);
+        anim.SetBool("isWalking", true);
+        anim.SetBool("isEquippedWithRifle", false);
+    }
+
+    void rifleIdle()
+    {
+        anim.SetBool("isEquippedWithRifle", true);
+        anim.SetBool("isWalking", false);
+        anim.SetBool("isEquipped", false);
+    }
+
+    void rifleWalking()
+    {
+        anim.SetBool("isEquippedWithRifle", true);
+        anim.SetBool("isWalking", true);
+        anim.SetBool("isEquipped", false);
     }
 }

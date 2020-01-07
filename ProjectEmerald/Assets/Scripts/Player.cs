@@ -26,6 +26,7 @@ public class Player : LivingEntity
         //meleeController = GetComponent<MeleeWeaponController>();
 
         viewCamera = Camera.main;
+       
     }
 
     

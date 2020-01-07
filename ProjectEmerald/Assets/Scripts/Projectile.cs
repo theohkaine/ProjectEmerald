@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
     public LayerMask collisionMask;
     float speed = 10;
-    float damage = 1;
+    public float damage = 1;
 
     float lifeTime = 3;
     float skinWidth = 0.1f;
