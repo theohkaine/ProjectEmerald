@@ -11,7 +11,7 @@ public class Display : MonoBehaviour
 
     void Start()
     {
-        health.SetText("5");
+        health.SetText("10");
     }
 
     public void SetHealth(string _health)

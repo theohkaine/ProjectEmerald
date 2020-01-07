@@ -5,26 +5,25 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(GunController))]
 //[RequireComponent(typeof(MeleeWeaponController))]
-public class Player : MonoBehaviour
+public class Player : LivingEntity
 {
 
     public float moveSpeed = 5;
-    public int health = 5;
+    
 
     Camera viewCamera;
     PlayerController controller;
     GunController gunController;
     //MeleeWeaponController meleeController;
     ControlPanelController controlPanel;
-    Display display;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
-        //meleeController = GetComponent<MeleeWeaponController>();
         controlPanel = GetComponent<ControlPanelController>();
-        display = GetComponent<Display>();
+        //meleeController = GetComponent<MeleeWeaponController>();
 
         viewCamera = Camera.main;
     }
@@ -96,13 +95,6 @@ public class Player : MonoBehaviour
             controlPanel.Activate();
             print("Reached 1");
         }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            health--;
-            display.SetHealth(health.ToString());
-        }
-
     }
 
 

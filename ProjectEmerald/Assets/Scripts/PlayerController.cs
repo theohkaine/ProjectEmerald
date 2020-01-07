@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         gunController = GetComponent<GunController>();
-
-       
     }
 
     public void MovementManager(Vector3 _velocity)
@@ -163,8 +161,6 @@ public class PlayerController : MonoBehaviour
 
 
     //================================
-
-
 
 
     public void LookAt(Vector3 lookPoint)
