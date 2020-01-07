@@ -40,10 +40,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         health -= damage;
 
-        if (GameObject.FindGameObjectWithTag("Player"))
-        {
-            display.SetHealth(health.ToString());
-        }
+        //if (GameObject.FindGameObjectWithTag("Player"))
+        //{
+           // display.SetHealth(health.ToString());
+        //}
 
         if (health <= 0 && !dead)
         {
