@@ -15,14 +15,14 @@ public class Player : LivingEntity
     PlayerController controller;
     GunController gunController;
     //MeleeWeaponController meleeController;
-    ControlPanelController controlPanel;
+   
 
     protected override void Start()
     {
         base.Start();
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
-        controlPanel = GetComponent<ControlPanelController>();
+       
         //meleeController = GetComponent<MeleeWeaponController>();
 
         viewCamera = Camera.main;
@@ -90,12 +90,6 @@ public class Player : LivingEntity
             gunController.EquipGun(gunController.shotgun);
         }
 
-        //Interact with control panels
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            controlPanel.Activate();
-            print("Reached 1");
-        }
     }
 
 

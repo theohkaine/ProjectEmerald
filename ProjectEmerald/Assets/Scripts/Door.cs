@@ -7,37 +7,72 @@ public class Door : MonoBehaviour
     public enum State { locked, open, close };
     State currentState;
 
+    Transform target;
+    LivingEntity targetEntity;
+
     static Animator anim;
+    bool hasTarget;
 
     void Start()
     {
         anim = GetComponent<Animator>();
-        currentState = State.close;
+        
         anim.SetInteger("doorPosition", 2);
+
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            currentState = State.close;
+        
+            hasTarget = true;
+
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+            targetEntity = target.GetComponent<LivingEntity>();
+            targetEntity.OnDeath += OnTargetDeath;
+        }
     }
 
-    public void Activate(Door door)
+    public void FixedUpdate()
     {
-        print("Reached 3");
-        if (currentState != State.locked)
+        float sqrDistanceToTarget = (target.position - transform.position).sqrMagnitude;
+        print(sqrDistanceToTarget);
+
+        if (sqrDistanceToTarget < 30)
         {
-            if (currentState == State.open)
-            {
-                anim.SetInteger("doorPosition", 2);
-                currentState = State.close;
-                print("CloseDoor");
-            }
-            if (currentState == State.close)
-            {
-                anim.SetInteger("doorPosition", 1);
-                currentState = State.open;
-                print("OpenDoor");
-            }
+            openDoor();
         }
         else
         {
-
-            //DOOR IS LOCKED
+            closeDoor();
         }
     }
+
+    void OnTargetDeath()
+    {
+        hasTarget = false;
+        currentState = State.locked;
+        lockedDoor();
+    }
+
+    //ANIMATIONS
+    //======================================================
+    void lockedDoor()
+    {
+        anim.SetInteger("doorPosition", 0);
+        currentState = State.locked;
+    }
+
+    void openDoor()
+    {
+        anim.SetInteger("doorPosition", 1);
+        currentState = State.open;
+    }
+
+    void closeDoor()
+    {
+        anim.SetInteger("doorPosition", 2);
+        currentState = State.close;
+    }
+
+
+    //======================================================
 }
