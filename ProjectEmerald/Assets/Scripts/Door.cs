@@ -5,7 +5,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     public enum State { locked, open, close };
-    State currentState;
+    public State currentState;
 
     Transform target;
     LivingEntity targetEntity;
@@ -13,7 +13,9 @@ public class Door : MonoBehaviour
     static Animator anim;
     bool hasTarget;
 
-    void Start()
+    public float sqrDistanceToTarget;
+
+    protected void Start()
     {
         anim = GetComponent<Animator>();
         
@@ -33,7 +35,7 @@ public class Door : MonoBehaviour
 
     public void FixedUpdate()
     {
-        float sqrDistanceToTarget = (target.position - transform.position).sqrMagnitude;
+        sqrDistanceToTarget = (target.position - transform.position).sqrMagnitude;
         print(sqrDistanceToTarget);
 
         if (sqrDistanceToTarget < 30)
